@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FFA - Final Fantasy Adventure Remake</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Stats Panel -->
+        <aside id="stats-panel" class="panel">
+            <h2 style="margin-bottom: 24px; font-size: 1.5rem; letter-spacing: 2px;">STATUS</h2>
+            
+            <div class="stat-item">
+                <div class="stat-label">Name</div>
+                <div class="stat-value" id="p-name">Adventurer</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-label">Job</div>
+                <div class="stat-value" id="p-job" style="color: var(--accent-blue);">Novice</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-label">Level</div>
+                <div class="stat-value" id="p-level">1</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-label">HP</div>
+                <div class="stat-value"><span id="p-hp">100</span> / <span id="p-hp-max">100</span></div>
+                <div class="hp-bar-container">
+                    <div id="hp-bar"></div>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-label">Weapon</div>
+                <div class="stat-value" id="p-weapon" style="color: var(--accent-gold); font-size: 0.9rem;">素手 (+0)</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-label">Gold</div>
+                <div class="stat-value" id="p-gold">0 G</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-label">Exp</div>
+                <div class="stat-value"><span id="p-exp">0</span> / <span id="p-exp-next">10</span></div>
+            </div>
+
+            <div style="margin-top: auto; font-size: 0.7rem; color: var(--text-dim);">
+                FFA Remake v0.2.0
+            </div>
+        </aside>
+
+        <!-- Action Panel -->
+        <main id="action-panel" class="panel">
+            <div class="location-header">
+                <div class="location-title" id="location-name">始まりの平原</div>
+                <select id="area-select" onchange="game.changeArea(this.value)">
+                    <option value="plains">始まりの平原</option>
+                    <option value="forest">迷いの森</option>
+                    <option value="hell">無限地獄</option>
+                </select>
+            </div>
+            
+            <div id="battle-visuals">
+                <div class="char-container">
+                    <img src="assets/hero.png" class="char-img" id="hero-img" alt="Hero">
+                    <div class="char-name-label" id="hero-label">Adventurer</div>
+                </div>
+                <div class="char-container">
+                    <img src="assets/slime.png" class="char-img" id="monster-img" alt="Monster">
+                    <div class="char-name-label" id="monster-label">Monster</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="btn-battle" onclick="game.battle()">モンスターを探す</button>
+                <button id="btn-rest" onclick="game.rest()">休憩する (HP回復)</button>
+                <button id="btn-shop" onclick="game.toggleModal('shop-modal')">武器屋</button>
+                <button id="btn-job" onclick="game.toggleModal('job-modal')">転職所</button>
+            </div>
+        </main>
+
+        <!-- Log Panel -->
+        <section id="log-panel" class="panel">
+            <div id="log-container">
+                <div class="log-entry log-info">世界に降り立ちました。冒険の始まりです。</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modals -->
+    <div id="shop-modal" class="modal-overlay">
+        <div class="modal-content panel">
+            <h3>武器屋</h3>
+            <div class="shop-list" id="shop-items">
+                <!-- Items injected by JS -->
+            </div>
+            <button onclick="game.toggleModal('shop-modal')" style="margin-top: 20px;">閉じる</button>
+        </div>
+    </div>
+
+    <div id="job-modal" class="modal-overlay">
+        <div class="modal-content panel">
+            <h3>転職所</h3>
+            <div class="job-list" id="job-items">
+                <!-- Jobs injected by JS -->
+            </div>
+            <button onclick="game.toggleModal('job-modal')" style="margin-top: 20px;">閉じる</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
